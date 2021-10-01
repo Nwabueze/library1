@@ -63,11 +63,13 @@ public class ReaderController {
         return 1;
     }
 
+    // Get all users
     @GetMapping("/all")
     public List<Reader> getAllReaders(){
         return readerService.findAll();
     }
 
+    // Login with email and password
     @PostMapping("/login/{email}/{passw}")
     public int userLogin(@PathVariable String email, @PathVariable String passw){
         if(email.isEmpty() || passw.isEmpty())
@@ -85,6 +87,7 @@ public class ReaderController {
        return 0;
     }
 
+    // Add book by its ISBN
     @PutMapping("/add/{isbn}")
     public long borrowBookFromLibrary(@PathVariable String isbn){
 
@@ -101,22 +104,17 @@ public class ReaderController {
         return templateReaderService.addReads(email, isbn);
     }
 
+    // This selects all the reader still in possession of any book belonging to the library
     @GetMapping("/borrowed")
     public List<Reader> getAllActiveBookHolders(){
+
         String email = (String) session.getAttribute("email");
         if(email.isEmpty() || email == null){
             // Just return an empty list
             return new ArrayList<>();
         }
-        return templateReaderService.activeBookHolders();
-    }
 
-    @DeleteMapping("/user/{email}")
-    public int addEmail(@PathVariable String email){
-        String email1 = (String) session.getAttribute("email");
-        if(email1.isEmpty())
-            return -1;
-        return 1;
+        return templateReaderService.activeBookHolders();
     }
 
     // Return a book you took from library

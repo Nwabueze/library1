@@ -21,6 +21,7 @@ public class BookController {
     @Autowired
     public HttpSession session;
 
+    // Add a new book (Login required)
     @PostMapping("/add")
     public int create(@RequestBody Book book){
         String isbn = book.getISBN();
@@ -37,21 +38,25 @@ public class BookController {
         return bookService.create(book);
     }
 
+    // Find book by title
     @GetMapping("/find/1/{title}")
     public List<Book> selectByTitle(@PathVariable String title){
         return bookService.selectByTitle(title);
     }
 
+    // Find book by author and year
     @GetMapping("/find/2/{author}/{year}")
     public List<Book> selectByAuthorAndYear(@PathVariable String author, @PathVariable String year){
         return bookService.selectByAuthorAndYear(author, year);
     }
 
+    // find all books
     @GetMapping("/all")
     public List<Book> allBooks(){
         return bookService.allBooks();
     }
 
+    // Check if current user is currently logged in or not
     @GetMapping("/user")
     public String getUserEmail(){
         String email = (String) session.getAttribute("email");

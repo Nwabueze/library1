@@ -29,12 +29,8 @@ public class Book {
 
     private String title;
 
-    @NotBlank
-    @NonNull
     private String author;
-
-    @NotBlank
-    @NonNull
+    
     private String year;
 
     public String getISBN(){
